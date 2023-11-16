@@ -128,3 +128,9 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+node_modules
+dist/
+build/
+.DS_Store
+.clasp*.json
+*.tgz
