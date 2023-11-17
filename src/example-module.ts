@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 export function hello() {
-  return 'Hello Apps Script!';
+  return "Hello Apps Script!";
 }
