@@ -16,6 +16,11 @@ export function execPreviousMonthDataBackup() {
     now.getMonth() - 1
   ).getTime();
 
+  const currentMonthUnixTime = new Date(
+    now.getFullYear(),
+    now.getMonth()
+  ).getTime();
+
   const sourceSpreadsheet = SpreadsheetApp.openById(
     properties.SOURCE_SPREADSHEET_ID
   );
@@ -29,8 +34,10 @@ export function execPreviousMonthDataBackup() {
   const sourceValues = sourceRange.getValues();
 
   const previousMonthValues = sourceValues.filter(row => {
-    const rowUnixTime = new Date(row[12]).getTime();
-    return previousMonthUnixTime === rowUnixTime;
+    const rowUnixTime = new Date(row[4]).getTime();
+    return (
+      previousMonthUnixTime <= rowUnixTime && rowUnixTime < currentMonthUnixTime
+    );
   });
 
   const targetSpreadsheet = SpreadsheetApp.openById(
@@ -52,4 +59,10 @@ export function execPreviousMonthDataBackup() {
       previousMonthValues[0].length
     )
     .setValues(previousMonthValues);
+
+  sourceSheet
+    .getRange(2, 1, sourceValues.length - 1, sourceValues[0].length)
+    .sort({ column: 5, ascending: true });
+
+  sourceSheet.deleteRows(2, previousMonthValues.length);
 }

@@ -1,3 +1,3 @@
 import { execPreviousMonthDataBackup } from "./backup";
 
-execPreviousMonthDataBackup();
+execPreviousMonthDataBackup;
